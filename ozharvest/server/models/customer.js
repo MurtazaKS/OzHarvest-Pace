@@ -65,8 +65,7 @@ const customerSchema = new mongoose.Schema({
           required: true
         }
       }
-    ],
-    select: false
+    ]
   },
   created: {
     type: Date,
