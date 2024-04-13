@@ -1,6 +1,6 @@
-# NeatoVeto Server
+# Check-in Server
 
-This server code handles the back-end function for the NeatoVeto application.
+This server code handles the back-end function for the check in application.
 
 ## Requirements
 
@@ -231,3 +231,4 @@ __Example:__
   "id": "61585b762e28bb8787bb32f6"
 }
 ```
+
