@@ -3,6 +3,7 @@ import { Box, AppBar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 
 const Nav = () => {
+  const navigate = useNavigate();
   return (
     <>
       <AppBar color="primary" position="relative">
@@ -17,7 +18,9 @@ const Nav = () => {
             style={{ width: "200px", height: "50px" }}
           />{" "}
           <Box>
-            <Button color="secondary" onClick={() => useNavigate('login')} >Log In</Button>
+            <Button color="secondary" onClick={() => navigate("login")}>
+              Log In
+            </Button>
           </Box>
         </Box>
       </AppBar>
