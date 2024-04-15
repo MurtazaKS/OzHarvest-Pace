@@ -18,8 +18,11 @@ const Nav = () => {
             style={{ width: "200px", height: "50px" }}
           />{" "}
           <Box>
-            <Button color="secondary" onClick={() => navigate("login")}>
+            <Button color="secondary" onClick={() => navigate("/login")}>
               Log In
+            </Button>
+            <Button color="secondary" onClick={() => navigate("/register")}>
+              Register
             </Button>
           </Box>
         </Box>

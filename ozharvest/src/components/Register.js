@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
-const Login = () => {
+
+const Register = () => {
   const [form, setForm] = useState({
     email: "",
     password: "",
@@ -35,7 +36,7 @@ const Login = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: ""
+          backgroundColor: "",
         }}>
         <Typography variant="h4">Login Form</Typography>
         <TextField
@@ -80,4 +81,4 @@ const Login = () => {
   );
 };
 
-export default Login;
+export default Register;
