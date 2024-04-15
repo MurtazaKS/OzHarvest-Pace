@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import axios from "axios";
 import {
   Box,
   Button,
@@ -9,14 +10,34 @@ import {
 } from "@mui/material";
 
 const Register = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
+  const [form, setForm] = useState(new FormData());
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const user = {
+      username: event.target.username.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/signup",
+        user
+      );
+      const token = response.data.token;
+      // Save the token to localStorage or use it as needed
+      console.log(token);
+    } catch (error) {
+      console.error(error);
+      // Handle the error as needed
+    }
   };
   return (
     <Box
@@ -29,6 +50,7 @@ const Register = () => {
       }}>
       <Box
         component="form"
+        onSubmit={handleSubmit}
         noValidate
         style={{
           margin: "10px",
@@ -38,7 +60,18 @@ const Register = () => {
           justifyContent: "center",
           backgroundColor: "",
         }}>
-        <Typography variant="h4">Login Form</Typography>
+        <Typography variant="h4">Register Form</Typography>
+        <TextField
+          {...(error && { error: true, helperText: error })}
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
+          autoFocus
+        />
         <TextField
           {...(error && { error: true, helperText: error })}
           margin="normal"
