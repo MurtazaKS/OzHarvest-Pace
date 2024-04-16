@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import {
   Box,
   Button,
@@ -7,10 +7,11 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
-import axios from "axios";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const Login = () => {
+  const { loginUser } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -28,13 +29,7 @@ const Login = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        user
-      );
-      const token = response.data.token;
-      // Save the token to localStorage or use it as needed
-      console.log(token);
+      await loginUser(user);
       navigate("/home");
     } catch (error) {
       console.error(error);

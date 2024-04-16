@@ -1,9 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Box, AppBar, Button } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const Nav = () => {
+  const { user, logout } = useContext(AuthContext);
   const navigate = useNavigate();
+
   return (
     <>
       <AppBar color="primary" position="relative">
@@ -20,20 +23,32 @@ const Nav = () => {
             style={{ width: "200px", height: "50px" }}
           />{" "}
           <Box>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ margin: "10px" }}
-              onClick={() => navigate("/login")}>
-              Log In
-            </Button>
-            <Button
-              variant="contained"
-              color="primary"
-              sx={{ margin: "10px" }}
-              onClick={() => navigate("/register")}>
-              Register
-            </Button>
+            {!user ? (
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ margin: "10px" }}
+                  onClick={() => navigate("/login")}>
+                  Log In
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ margin: "10px" }}
+                  onClick={() => navigate("/register")}>
+                  Register
+                </Button>
+              </>
+            ) : (
+              <Button
+                variant="contained"
+                color="primary"
+                sx={{ margin: "10px" }}
+                onClick={logout}>
+                Log out
+              </Button>
+            )}
           </Box>
         </Box>
       </AppBar>

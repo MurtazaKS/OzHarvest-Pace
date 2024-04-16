@@ -6,6 +6,7 @@ import Home from "./components/Home";
 
 const routeDefinitions = createRoutesFromElements(
   <>
+  
     <Route path="/" element={<RootLayout />}>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />

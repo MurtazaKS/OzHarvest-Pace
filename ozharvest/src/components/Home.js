@@ -1,7 +1,14 @@
 import { Box, Typography, Button } from "@mui/material";
-import React from "react";
+import React, { useContext } from "react";
+import { AuthContext } from "../context/authContext";
 
 const Home = () => {
+  const { logoutUser } = useContext(AuthContext);
+  const handleLogout = () => {
+    logoutUser();
+    const token = localStorage.getItem("token");
+    console.log(token);
+  };
   return (
     <Box
       style={{
@@ -16,6 +23,13 @@ const Home = () => {
       </Button>
       <Button variant="contained" color="primary" sx={{ margin: "20px" }}>
         Check-In Visitor
+      </Button>
+      <Button
+        variant="contained"
+        color="primary"
+        sx={{ margin: "20px" }}
+        onClick={() => handleLogout()}>
+        Logout
       </Button>
     </Box>
   );

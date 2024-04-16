@@ -30,7 +30,6 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <RouterProvider router={Router}>
-        <Nav />
         <Login />
       </RouterProvider>
     </ThemeProvider>

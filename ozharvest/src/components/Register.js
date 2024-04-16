@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import axios from "axios";
 import {
   Box,
@@ -9,11 +9,14 @@ import {
   Typography,
 } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import { AuthContext } from "../context/authContext";
 
 const Register = () => {
+  const { createUser } = useContext(AuthContext);
   const [form, setForm] = useState(new FormData());
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
+
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
@@ -29,12 +32,7 @@ const Register = () => {
     };
 
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/signup",
-        user
-      );
-      const token = response.data.token;
-      // Save the token to localStorage or use it as needed
+      await createUser(user);
       navigate("/login");
     } catch (error) {
       console.error(error);
