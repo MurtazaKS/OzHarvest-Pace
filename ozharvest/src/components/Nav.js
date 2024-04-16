@@ -9,8 +9,10 @@ const Nav = () => {
       <AppBar color="primary" position="relative">
         <Box
           sx={{
+            padding: "10px",
             display: "flex",
             justifyContent: "space-between",
+            alignItems: "center",
           }}>
           <img
             src={"https://www.ozharvest.org/assets/images/main-logo.svg"}
@@ -18,10 +20,18 @@ const Nav = () => {
             style={{ width: "200px", height: "50px" }}
           />{" "}
           <Box>
-            <Button color="secondary" onClick={() => navigate("/login")}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ margin: "10px" }}
+              onClick={() => navigate("/login")}>
               Log In
             </Button>
-            <Button color="secondary" onClick={() => navigate("/register")}>
+            <Button
+              variant="contained"
+              color="primary"
+              sx={{ margin: "10px" }}
+              onClick={() => navigate("/register")}>
               Register
             </Button>
           </Box>

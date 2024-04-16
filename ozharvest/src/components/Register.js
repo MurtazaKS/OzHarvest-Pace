@@ -48,7 +48,6 @@ const Register = () => {
         alignItems: "center",
         justifyContent: "center",
         height: "100vh",
-        border: "1px solid",
       }}>
       <Box
         component="form"
@@ -60,7 +59,9 @@ const Register = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: "",
+          border: "1px solid",
+          padding: "20px",
+          borderRadius: "10px",
         }}>
         <Typography variant="h4">Register Form</Typography>
         <TextField

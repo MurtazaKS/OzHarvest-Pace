@@ -11,8 +11,12 @@ const Home = () => {
         height: "100vh",
         border: "1px solid",
       }}>
-      <Button>Add New Visitor</Button>
-      <Button>Check-In Visitor</Button>
+      <Button variant="contained" color="primary" sx={{ margin: "20px" }}>
+        Add New Visitor
+      </Button>
+      <Button variant="contained" color="primary" sx={{ margin: "20px" }}>
+        Check-In Visitor
+      </Button>
     </Box>
   );
 };
