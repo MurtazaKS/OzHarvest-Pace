@@ -8,6 +8,7 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
   const [form, setForm] = useState(new FormData());
@@ -16,6 +17,7 @@ const Register = () => {
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
   };
+  const navigate = useNavigate();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -33,7 +35,7 @@ const Register = () => {
       );
       const token = response.data.token;
       // Save the token to localStorage or use it as needed
-      console.log(token);
+      navigate("/login");
     } catch (error) {
       console.error(error);
       // Handle the error as needed

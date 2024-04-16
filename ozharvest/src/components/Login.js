@@ -7,15 +7,39 @@ import {
   InputAdornment,
   Typography,
 } from "@mui/material";
+import axios from "axios";
+import { useNavigate } from "react-router-dom";
+
 const Login = () => {
-  const [form, setForm] = useState({
-    email: "",
-    password: "",
-  });
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
     setShowPassword(!showPassword);
+  };
+  const navigate = useNavigate();
+
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+
+    const user = {
+      username: event.target.username.value,
+      email: event.target.email.value,
+      password: event.target.password.value,
+    };
+
+    try {
+      const response = await axios.post(
+        "http://localhost:3001/api/auth/login",
+        user
+      );
+      const token = response.data.token;
+      // Save the token to localStorage or use it as needed
+      console.log(token);
+      navigate("/home");
+    } catch (error) {
+      console.error(error);
+      // Handle the error as needed
+    }
   };
   return (
     <Box
@@ -28,6 +52,7 @@ const Login = () => {
       }}>
       <Box
         component="form"
+        onSubmit={handleSubmit}
         noValidate
         style={{
           margin: "10px",
@@ -35,9 +60,19 @@ const Login = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          backgroundColor: ""
         }}>
         <Typography variant="h4">Login Form</Typography>
+        <TextField
+          {...(error && { error: true, helperText: error })}
+          margin="normal"
+          required
+          fullWidth
+          id="username"
+          label="Username"
+          name="username"
+          autoComplete="username"
+          autoFocus
+        />
         <TextField
           {...(error && { error: true, helperText: error })}
           margin="normal"
