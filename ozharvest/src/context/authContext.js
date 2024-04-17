@@ -43,8 +43,9 @@ export const AuthProvider = ({ children }) => {
       if (response.data.username === "guest") {
         setUser(null);
       } else {
-        setUser(response.data);
+        setUser(response.data.user);
         console.log(response.data);
+        return response.data;
       }
     } catch (error) {
       console.error(error);
@@ -73,6 +74,7 @@ export const AuthProvider = ({ children }) => {
     loginUser,
     user,
     logoutUser,
+    checkAuthStatus,
   };
 
   return (

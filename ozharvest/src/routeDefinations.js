@@ -3,14 +3,15 @@ import Login from "./components/Login";
 import RootLayout from "./components/Root";
 import Register from "./components/Register";
 import Home from "./components/Home";
+import AddNewVisitor from "./components/AddNewVisitor";
 
 const routeDefinitions = createRoutesFromElements(
   <>
-  
     <Route path="/" element={<RootLayout />}>
       <Route path="/login" element={<Login />} />
       <Route path="/register" element={<Register />} />
       <Route path="/home" element={<Home />} />
+      <Route path="/newvisitor" element={<AddNewVisitor />} />
     </Route>
   </>
 );

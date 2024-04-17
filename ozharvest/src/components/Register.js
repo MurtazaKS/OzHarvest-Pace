@@ -1,5 +1,4 @@
 import React, { useState, useContext } from "react";
-import axios from "axios";
 import {
   Box,
   Button,
@@ -57,7 +56,7 @@ const Register = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          border: "1px solid",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 1)",
           padding: "20px",
           borderRadius: "10px",
         }}>

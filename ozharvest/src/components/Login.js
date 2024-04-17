@@ -54,7 +54,7 @@ const Login = () => {
           flexDirection: "column",
           alignItems: "center",
           justifyContent: "center",
-          border: "1px solid",
+          boxShadow: "0 0 10px rgba(0, 0, 0, 1)",
           padding: "20px",
           borderRadius: "10px",
         }}>
