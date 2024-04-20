@@ -1,8 +1,25 @@
 import React, { useContext } from "react";
-import { Box, TextField, Typography, Button } from "@mui/material";
+import { Box, TextField, Typography, Button, Select } from "@mui/material";
+import { DataContext } from "../context/dataContext";
 
 const AddNewVisitor = () => {
-  const handleSubmit = async (event) => {};
+  const { newVisitor } = useContext(DataContext);
+  const handleSubmit = async (event) => {
+    event.preventDefault();
+    const visitor = {
+      firstname: event.target.firstname.value,
+      middlename: event.target.middlename.value,
+      lastname: event.target.lastname.value,
+      typeofdoc: event.target.typeofdoc.value,
+      documentid: event.target.documentid.value,
+      language: event.target.language.value,
+    };
+    try {
+      await newVisitor(visitor);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
     <Box>
       <Box
@@ -18,6 +35,12 @@ const AddNewVisitor = () => {
           padding: "20px",
           borderRadius: "10px",
         }}>
+        {/* <Select
+          margin="normal"
+          fullWidth
+          label="Title"
+          defaultValue=""
+          id="title-select"></Select> */}
         <TextField
           margin="normal"
           required
@@ -26,6 +49,15 @@ const AddNewVisitor = () => {
           label="First Name"
           name="firstname"
           autoComplete="firstname"
+          autoFocus
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          id="middlename"
+          label="Middle Name"
+          name="middlename"
+          autoComplete="middlename"
           autoFocus
         />
         <TextField
@@ -58,6 +90,18 @@ const AddNewVisitor = () => {
           autoComplete="documentid"
           autoFocus
         />
+        <TextField
+          margin="normal"
+          fullWidth
+          id="language"
+          label="Language"
+          name="language"
+          autoComplete="language"
+          autoFocus
+        />
+        <Button type="submit" variant="contained" color="primary">
+          Add Visitor
+        </Button>
       </Box>
     </Box>
   );
