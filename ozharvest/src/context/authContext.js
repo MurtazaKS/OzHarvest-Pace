@@ -29,7 +29,7 @@ export const AuthProvider = ({ children }) => {
       );
       const token = response.data.token;
       // Save the token to localStorage or use it as needed
-      console.log(token);
+      console.log(response);
       localStorage.setItem("token", token);
     } catch (error) {
       console.error(error);
@@ -39,13 +39,20 @@ export const AuthProvider = ({ children }) => {
 
   const checkAuthStatus = async () => {
     try {
-      const response = await axios.get("/api/auth/whoami");
-      if (response.data.username === "guest") {
-        setUser(null);
-      } else {
-        setUser(response.data.user);
-        console.log(response.data);
+      const token = localStorage.getItem("token");
+      const response = await axios.get(
+        "http://localhost:3001/api/auth/whoami",
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      if (response.data.username !== "guest") {
+        setUser(response.data.id);
         return response.data;
+      } else {
+        setUser(null);
       }
     } catch (error) {
       console.error(error);
