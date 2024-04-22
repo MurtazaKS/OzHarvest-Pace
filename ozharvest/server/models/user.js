@@ -35,12 +35,11 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: false
   },
-  created: {
-    type: Date,
-    default: Date.now(),
-    required: true
+  role:  {
+    type: String,
+    required: false
   }
-})
+}, { timestamps: true })
 
 userSchema.set('toJSON', {
   transform: (document, returnedObject) => {

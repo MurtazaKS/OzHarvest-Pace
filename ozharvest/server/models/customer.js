@@ -29,9 +29,48 @@ const customerSchema = new mongoose.Schema({
     type: String,
     required: false
   },
+  birthday: {
+    type: Date,
+    required: false
+  },
   language: {
     type: String,
     required: false
+  },
+  addresses: {
+    type: [
+      {
+        type: {
+          type: String,
+          required: true
+        },
+        address: {
+          type: String,
+          required: false
+        },
+        suburb: {
+          type: String,
+          required: false
+        },
+        state: {
+          type: String,
+          required: false
+        },
+        postcode: {
+          type: String,
+          required: false
+        },
+        creator: {
+          type: Schema.Types.ObjectId, ref: "User",
+          required: true
+        },
+        created: {
+          type: Date,
+          default: Date.now(),
+          required: true
+        }
+      }
+    ]
   },
   ident: {
     type: [
@@ -40,8 +79,12 @@ const customerSchema = new mongoose.Schema({
           type: String,
           required: true
         },
-        id: {
+        value: {
           type: String,
+          required: true
+        },
+        creator: {
+          type: Schema.Types.ObjectId, ref: "User",
           required: true
         },
         created: {
@@ -59,6 +102,10 @@ const customerSchema = new mongoose.Schema({
           type: String,
           required: true
         },
+        checker: {
+          type: Schema.Types.ObjectId, ref: "User",
+          required: true
+        },
         date: {
           type: Date,
           default: Date.now(),
@@ -67,12 +114,25 @@ const customerSchema = new mongoose.Schema({
       }
     ]
   },
-  created: {
-    type: Date,
-    default: Date.now(),
+  comments: {
+    type: [
+      {
+        comment: {
+          type: String,
+          required: true
+        },
+        creator: {
+          type: Schema.Types.ObjectId, ref: "User",
+          required: true
+        }
+      }, { timestamps: true }
+    ]
+  },
+  creator: {
+    type: Schema.Types.ObjectId, ref: "User",
     required: true
-  }
-})
+  },
+}, { timestamps: true })
 
 customerSchema.set('toJSON', {
   transform: (document, returnedObject) => {

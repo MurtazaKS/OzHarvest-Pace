@@ -76,7 +76,7 @@ router.post(["/api/auth/signup", "/api/signup"],
             })
           } else {
             /* Check Restricted Usernames */
-            const restrictedUsernames = ["admin", "user", "follow", "post", "root", "guest", "neatoveto"];
+            const restrictedUsernames = ["admin", "user", "root", "guest"];
             if (restrictedUsernames.includes(username.toLowerCase())) {
               return res.status(400).json({
                 errors: [{
