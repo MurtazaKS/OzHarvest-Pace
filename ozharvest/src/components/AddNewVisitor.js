@@ -18,6 +18,7 @@ const AddNewVisitor = () => {
       firstname: event.target.firstname.value,
       middlename: event.target.middlename.value,
       lastname: event.target.lastname.value,
+      birthday: event.target.birthday.value,
       language: event.target.language.value,
     };
     try {
@@ -42,7 +43,7 @@ const AddNewVisitor = () => {
           borderRadius: "10px",
         }}>
         <Select
-          margin="normal"
+          margin="10px"
           fullWidth
           label="Title"
           name="title"
@@ -80,6 +81,15 @@ const AddNewVisitor = () => {
           label="Last Name"
           name="lastname"
           autoComplete="lastname"
+          autoFocus
+        />
+        <TextField
+          type="date"
+          margin="normal"
+          fullWidth
+          id="birthday"
+          name="birthday"
+          autoComplete="birthday"
           autoFocus
         />
         <TextField

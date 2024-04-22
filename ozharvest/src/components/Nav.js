@@ -8,7 +8,6 @@ const Nav = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     logoutUser();
-    
     navigate("/login");
   };
 
@@ -46,13 +45,22 @@ const Nav = () => {
                 </Button>
               </>
             ) : (
-              <Button
-                variant="contained"
-                color="primary"
-                sx={{ margin: "10px" }}
-                onClick={handleLogout}>
-                Log out
-              </Button>
+              <>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ margin: "10px" }}
+                  onClick={() => navigate("/home")}>
+                  Home
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ margin: "10px" }}
+                  onClick={handleLogout}>
+                  Log out
+                </Button>
+              </>
             )}
           </Box>
         </Box>
