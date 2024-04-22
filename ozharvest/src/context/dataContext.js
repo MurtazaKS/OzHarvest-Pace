@@ -4,19 +4,23 @@ import { AuthContext } from "../context/authContext";
 
 export const DataContext = createContext();
 
-const baseURL = "http://localhost:3001/api/customer";
-
 export const DataProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
+  const token = localStorage.getItem("token");
   const [, setUser] = useState(user);
 
   const newVisitor = async (visitor) => {
     try {
-      const response = await axios.post(`${baseURL}/register`, visitor, {
-        headers: {
-          Authorization: `Bearer ${user.token}`,
-        },
-      });
+      const response = await axios.post(
+        "http://localhost:3001/api/customer/register",
+        visitor,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+      console.log(response);
       return response.data;
     } catch (error) {
       console.error(error);

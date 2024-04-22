@@ -1,5 +1,12 @@
 import React, { useContext } from "react";
-import { Box, TextField, Typography, Button, Select } from "@mui/material";
+import {
+  Box,
+  TextField,
+  Typography,
+  Button,
+  Select,
+  MenuItem,
+} from "@mui/material";
 import { DataContext } from "../context/dataContext";
 
 const AddNewVisitor = () => {
@@ -7,11 +14,10 @@ const AddNewVisitor = () => {
   const handleSubmit = async (event) => {
     event.preventDefault();
     const visitor = {
+      title: event.target.title.value,
       firstname: event.target.firstname.value,
       middlename: event.target.middlename.value,
       lastname: event.target.lastname.value,
-      typeofdoc: event.target.typeofdoc.value,
-      documentid: event.target.documentid.value,
       language: event.target.language.value,
     };
     try {
@@ -35,12 +41,18 @@ const AddNewVisitor = () => {
           padding: "20px",
           borderRadius: "10px",
         }}>
-        {/* <Select
+        <Select
           margin="normal"
           fullWidth
           label="Title"
+          name="title"
           defaultValue=""
-          id="title-select"></Select> */}
+          id="title-select">
+          <MenuItem value="Dr">Dr</MenuItem>
+          <MenuItem value="Mr">Mr</MenuItem>
+          <MenuItem value="Ms">Ms</MenuItem>
+          <MenuItem value="Mrs">Mrs</MenuItem>
+        </Select>
         <TextField
           margin="normal"
           required
@@ -68,26 +80,6 @@ const AddNewVisitor = () => {
           label="Last Name"
           name="lastname"
           autoComplete="lastname"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="typeofdoc"
-          label="Type of Document"
-          name="typeofdoc"
-          autoComplete="typeofdoc"
-          autoFocus
-        />
-        <TextField
-          margin="normal"
-          required
-          fullWidth
-          id="documentid"
-          label="Document ID"
-          name="documentid"
-          autoComplete="documentid"
           autoFocus
         />
         <TextField

@@ -4,7 +4,9 @@ import axios from "axios";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(
+    JSON.parse(localStorage.getItem("user")) || null
+  );
 
   const createUser = async (user) => {
     try {
@@ -50,13 +52,15 @@ export const AuthProvider = ({ children }) => {
       );
       if (response.data.username !== "guest") {
         setUser(response.data.id);
-        return response.data;
+        localStorage.setItem("user", JSON.stringify(response.data.id));
+        return response.data.id;
       } else {
         setUser(null);
+        localStorage.removeItem("user");
+        localStorage.removeItem("token");
       }
     } catch (error) {
       console.error(error);
-      // Handle the error as needed
     }
   };
 
@@ -65,6 +69,7 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.get("http://localhost:3001/api/auth/logout");
       if (response.status === 204) {
         localStorage.removeItem("token");
+        localStorage.removeItem("user");
         setUser(null);
       }
     } catch (error) {

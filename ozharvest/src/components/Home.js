@@ -39,7 +39,11 @@ const Home = () => {
           onClick={() => navigate("/newvisitor")}>
           Add New Visitor
         </Button>
-        <Button variant="contained" color="primary" sx={{ margin: "10px" }}>
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => navigate("/checkin")}
+          sx={{ margin: "10px" }}>
           Check-In Visitor
         </Button>
         <Button

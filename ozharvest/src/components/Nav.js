@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import { Box, AppBar, Button, Typography } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
@@ -8,9 +8,8 @@ const Nav = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     logoutUser();
+    
     navigate("/login");
-    const token = localStorage.getItem("token");
-    console.log(token);
   };
 
   return (
