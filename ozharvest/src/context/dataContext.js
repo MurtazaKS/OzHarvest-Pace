@@ -38,7 +38,24 @@ export const DataProvider = ({ children }) => {
           },
         }
       );
-      console.log(response);  
+      console.log(response.data);
+      return response.data;
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const checkInCustomer = async (customerId, location) => {
+    try {
+      const response = await axios.post(
+        `/api/customer/${customerId}/checkin`,
+        { location },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       return response.data;
     } catch (error) {
       console.error(error);
@@ -48,6 +65,7 @@ export const DataProvider = ({ children }) => {
   const dataValue = {
     newVisitor,
     searchCustomer,
+    checkInCustomer,
   };
   return (
     <DataContext.Provider value={dataValue}>{children}</DataContext.Provider>

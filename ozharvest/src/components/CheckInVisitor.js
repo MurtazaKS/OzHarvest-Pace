@@ -1,10 +1,20 @@
 import React, { useContext, useState } from "react";
 import { DataContext } from "../context/dataContext";
-import { Box, TextField, List, ListItem, Button } from "@mui/material";
+import {
+  Box,
+  TextField,
+  List,
+  ListItem,
+  Button,
+  MenuItem,
+  Select,
+} from "@mui/material";
 
 const CheckInVisitor = () => {
-  const { searchCustomer } = useContext(DataContext);
+  const { searchCustomer, checkInCustomer } = useContext(DataContext);
   const [searchResults, setSearchResults] = useState([]);
+  const [location, setLocation] = useState("");
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const customer = {
@@ -17,6 +27,10 @@ const CheckInVisitor = () => {
     } catch (error) {
       console.error(error);
     }
+  };
+
+  const handleCheckIn = async (customerId) => {
+    await checkInCustomer(customerId, location);
   };
   return (
     <Box component="form" onSubmit={handleSubmit}>
@@ -46,9 +60,21 @@ const CheckInVisitor = () => {
 
       <List>
         {searchResults.map((result, index) => (
-          <ListItem key={index}>
-            {result.firstname} {result.lastname}
-          </ListItem>
+          <>
+            <ListItem key={index}>
+              {result.firstname} {result.lastname}
+            </ListItem>
+            <Select
+              value={location}
+              onChange={(e) => setLocation(e.target.value)}>
+              <MenuItem value="Waterloo">Waterloo</MenuItem>
+            </Select>
+            <Button
+              variant="contained"
+              onClick={() => handleCheckIn(result.id)}>
+              Check In
+            </Button>
+          </>
         ))}
       </List>
     </Box>
