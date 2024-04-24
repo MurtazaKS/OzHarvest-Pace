@@ -7,13 +7,11 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
+  const baseURL = "http://localhost:3001/api/auth";
 
   const createUser = async (user) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/signup",
-        user
-      );
+      const response = await axios.post(`${baseURL}/signup`, user);
       const token = response.data.token;
       // Save the token to localStorage or use it as needed
       console.log(token);
@@ -25,10 +23,7 @@ export const AuthProvider = ({ children }) => {
 
   const loginUser = async (user) => {
     try {
-      const response = await axios.post(
-        "http://localhost:3001/api/auth/login",
-        user
-      );
+      const response = await axios.post(`${baseURL}/login`, user);
       const token = response.data.token;
       // Save the token to localStorage or use it as needed
       console.log(response);
@@ -42,14 +37,11 @@ export const AuthProvider = ({ children }) => {
   const checkAuthStatus = async () => {
     try {
       const token = localStorage.getItem("token");
-      const response = await axios.get(
-        "http://localhost:3001/api/auth/whoami",
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const response = await axios.get(`${baseURL}/whoami`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (response.data.username !== "guest") {
         setUser(response.data.id);
         localStorage.setItem("user", JSON.stringify(response.data.id));
@@ -66,7 +58,7 @@ export const AuthProvider = ({ children }) => {
 
   const logoutUser = async () => {
     try {
-      const response = await axios.get("http://localhost:3001/api/auth/logout");
+      const response = await axios.get(`${baseURL}/logout`);
       if (response.status === 204) {
         localStorage.removeItem("token");
         localStorage.removeItem("user");
@@ -79,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthStatus();
-  }, []);
+  }, [user]);
 
   const authValue = {
     createUser,

@@ -24,7 +24,6 @@ const Login = () => {
 
     const user = {
       username: event.target.username.value,
-      email: event.target.email.value,
       password: event.target.password.value,
     };
 
@@ -68,17 +67,6 @@ const Login = () => {
           label="Username"
           name="username"
           autoComplete="username"
-          autoFocus
-        />
-        <TextField
-          {...(error && { error: true, helperText: error })}
-          margin="normal"
-          required
-          fullWidth
-          id="email"
-          label="Email Address"
-          name="email"
-          autoComplete="email"
           autoFocus
         />
         <TextField

@@ -60,8 +60,14 @@ const CheckInVisitor = () => {
 
       <List>
         {searchResults.map((result, index) => (
-          <>
-            <ListItem key={index}>
+          <Box
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+            }}
+            key={index}>
+            <ListItem>
               {result.firstname} {result.lastname}
             </ListItem>
             <Select
@@ -74,7 +80,7 @@ const CheckInVisitor = () => {
               onClick={() => handleCheckIn(result.id)}>
               Check In
             </Button>
-          </>
+          </Box>
         ))}
       </List>
     </Box>
