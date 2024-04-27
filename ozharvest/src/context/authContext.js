@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
-  const baseURL = "http://localhost:3001/api/auth";
+  const baseURL = "/api/auth";
 
   const createUser = async (user) => {
     try {

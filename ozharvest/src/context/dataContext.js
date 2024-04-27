@@ -10,7 +10,7 @@ export const DataProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   const [, setUser] = useState(user);
-  const baseURL = "http://localhost:3001/api/customer";
+  const baseURL = "/api/customer";
 
   const newVisitor = async (visitor) => {
     try {
