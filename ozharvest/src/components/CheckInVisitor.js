@@ -8,6 +8,7 @@ import {
   Button,
   MenuItem,
   Select,
+  Typography,
 } from "@mui/material";
 
 const CheckInVisitor = () => {
@@ -70,6 +71,25 @@ const CheckInVisitor = () => {
             <ListItem>
               {result.firstname} {result.lastname}
             </ListItem>
+            {result.checkin && result.checkin.length > 0 && (
+              <>
+                <Typography>
+                  Date: {result.checkin[result.checkin.length - 1].date}
+                </Typography>
+                <Typography>
+                  Day:{" "}
+                  {new Date(
+                    result.checkin[result.checkin.length - 1].date
+                  ).toLocaleDateString("en-US", { weekday: "long" })}
+                </Typography>
+                <Typography>
+                  Time: {result.checkin[result.checkin.length - 1].time}
+                </Typography>
+                <Typography>
+                  Location: {result.checkin[result.checkin.length - 1].location}
+                </Typography>
+              </>
+            )}
             <Select
               value={location}
               onChange={(e) => setLocation(e.target.value)}>

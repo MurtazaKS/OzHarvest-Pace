@@ -1,6 +1,8 @@
 import React, { createContext, useState, useContext } from "react";
 import axios from "axios";
 import { AuthContext } from "../context/authContext";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const DataContext = createContext();
 
@@ -17,10 +19,12 @@ export const DataProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response);
+      if (response.data) {
+        toast.success("Customer Added Successfully");
+      }
       return response.data;
     } catch (error) {
-      console.error(error);
+      toast.error("Failed to Add Customer");
     }
   };
 
@@ -31,10 +35,12 @@ export const DataProvider = ({ children }) => {
           Authorization: `Bearer ${token}`,
         },
       });
-      console.log(response.data);
+      if (response.data) {
+        toast.success("Customer Listed");
+      }
       return response.data;
     } catch (error) {
-      console.error(error);
+      toast.error("Failed to List Customer");
     }
   };
 
@@ -49,10 +55,10 @@ export const DataProvider = ({ children }) => {
           },
         }
       );
-      console.log(response.data);
+      toast.success("Customer Checked In Successfully");
       return response.data;
     } catch (error) {
-      console.error(error);
+      toast.error("Failed to Check In Customer");
     }
   };
 
@@ -62,6 +68,9 @@ export const DataProvider = ({ children }) => {
     checkInCustomer,
   };
   return (
-    <DataContext.Provider value={dataValue}>{children}</DataContext.Provider>
+    <>
+      <DataContext.Provider value={dataValue}>{children}</DataContext.Provider>
+      <ToastContainer />
+    </>
   );
 };

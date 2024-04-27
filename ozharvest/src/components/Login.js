@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Login = () => {
-  const { loginUser } = useContext(AuthContext);
+  const { loginUser, user } = useContext(AuthContext);
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
   const handleClickShowPassword = () => {
@@ -31,10 +31,20 @@ const Login = () => {
       await loginUser(user);
       navigate("/home");
     } catch (error) {
-      console.error(error);
-      // Handle the error as needed
+      if (error.response && error.response.status === 401) {
+        setError("Incorrect username or password");
+      } else {
+        console.error(error);
+        // Handle other types of errors as needed
+      }
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
   return (
     <Box
       style={{

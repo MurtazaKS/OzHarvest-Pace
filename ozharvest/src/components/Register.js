@@ -1,4 +1,4 @@
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import {
   Box,
   Button,
@@ -11,7 +11,7 @@ import { useNavigate } from "react-router-dom";
 import { AuthContext } from "../context/authContext";
 
 const Register = () => {
-  const { createUser } = useContext(AuthContext);
+  const { createUser, user } = useContext(AuthContext);
   const [form, setForm] = useState(new FormData());
   const [error, setError] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
@@ -38,6 +38,12 @@ const Register = () => {
       // Handle the error as needed
     }
   };
+
+  useEffect(() => {
+    if (user) {
+      navigate("/home");
+    }
+  }, [user, navigate]);
   return (
     <Box
       style={{

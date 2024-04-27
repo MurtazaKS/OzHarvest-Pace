@@ -86,6 +86,7 @@ const AddNewVisitor = () => {
         <TextField
           type="date"
           margin="normal"
+          required
           fullWidth
           id="birthday"
           name="birthday"

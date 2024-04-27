@@ -1,5 +1,7 @@
 import React, { createContext, useState, useEffect } from "react";
 import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const AuthContext = createContext();
 
@@ -12,11 +14,12 @@ export const AuthProvider = ({ children }) => {
   const createUser = async (user) => {
     try {
       const response = await axios.post(`${baseURL}/signup`, user);
-      const token = response.data.token;
       // Save the token to localStorage or use it as needed
-      console.log(token);
+      toast.success("User Created Successfully");
+      return response.data;
     } catch (error) {
       console.error(error);
+      toast.error("Failed to Create User");
       // Handle the error as needed
     }
   };
@@ -25,11 +28,12 @@ export const AuthProvider = ({ children }) => {
     try {
       const response = await axios.post(`${baseURL}/login`, user);
       const token = response.data.token;
-      // Save the token to localStorage or use it as needed
-      console.log(response);
       localStorage.setItem("token", token);
+      toast.success("User Logged In Successfully");
+      return response.data;
     } catch (error) {
       console.error(error);
+      toast.error("Failed to Log In");
       // Handle the error as needed
     }
   };
@@ -82,6 +86,9 @@ export const AuthProvider = ({ children }) => {
   };
 
   return (
-    <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+    <>
+      <AuthContext.Provider value={authValue}>{children}</AuthContext.Provider>
+      <ToastContainer />
+    </>
   );
 };
