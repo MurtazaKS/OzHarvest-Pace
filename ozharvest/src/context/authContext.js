@@ -9,7 +9,7 @@ export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(
     JSON.parse(localStorage.getItem("user")) || null
   );
-  const baseURL = "/api/auth";
+  const baseURL = "http://localhost:3001/api/auth";
 
   const createUser = async (user) => {
     try {
@@ -29,7 +29,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.post(`${baseURL}/login`, user);
       const token = response.data.token;
       localStorage.setItem("token", token);
-      toast.success("User Logged In Successfully");
       return response.data;
     } catch (error) {
       console.error(error);
@@ -75,7 +74,7 @@ export const AuthProvider = ({ children }) => {
 
   useEffect(() => {
     checkAuthStatus();
-  }, [user]);
+  }, []);
 
   const authValue = {
     createUser,

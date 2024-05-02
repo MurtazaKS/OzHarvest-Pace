@@ -1,8 +1,10 @@
-import React, { useContext } from "react";
+import React, { useContext, useState } from "react";
 import {
   Box,
   TextField,
   Typography,
+  FormControl,
+  InputLabel,
   Button,
   Select,
   MenuItem,
@@ -10,7 +12,12 @@ import {
 import { DataContext } from "../context/dataContext";
 
 const AddNewVisitor = () => {
-  const { newVisitor } = useContext(DataContext);
+  const { newVisitor, addIdent } = useContext(DataContext);
+  const [document, setDocument] = useState({
+    document: "",
+    value: "",
+  });
+
   const handleSubmit = async (event) => {
     event.preventDefault();
     const visitor = {
@@ -19,10 +26,22 @@ const AddNewVisitor = () => {
       middlename: event.target.middlename.value,
       lastname: event.target.lastname.value,
       birthday: event.target.birthday.value,
+      // document: event.target.document.value,
+      // value: event.target.value.value,
       language: event.target.language.value,
     };
     try {
       await newVisitor(visitor);
+      //await addIdent(visitor.document, visitor.value);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleAddDocument = async (event) => {
+    event.preventDefault();
+    try {
+      await addIdent(document.document, document.value);
     } catch (error) {
       console.error(error);
     }
@@ -42,18 +61,6 @@ const AddNewVisitor = () => {
           padding: "20px",
           borderRadius: "10px",
         }}>
-        <Select
-          margin="10px"
-          fullWidth
-          label="Title"
-          name="title"
-          defaultValue=""
-          id="title-select">
-          <MenuItem value="Dr">Dr</MenuItem>
-          <MenuItem value="Mr">Mr</MenuItem>
-          <MenuItem value="Ms">Ms</MenuItem>
-          <MenuItem value="Mrs">Mrs</MenuItem>
-        </Select>
         <TextField
           margin="normal"
           required
@@ -104,6 +111,63 @@ const AddNewVisitor = () => {
         />
         <Button type="submit" variant="contained" color="primary">
           Add Visitor
+        </Button>
+      </Box>
+      <Box
+        style={{
+          margin: "10px",
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          border: "1px solid",
+          padding: "20px",
+          borderRadius: "10px",
+        }}>
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="document-label">Document</InputLabel>
+          <Select
+            labelId="document-label"
+            required
+            name="document"
+            id="document"
+            onChange={(event) => {
+              setDocument({ ...document, document: event.target.value });
+            }}
+            label="Document">
+            <MenuItem value="Email">Email</MenuItem>
+            <MenuItem value="Phone Number">Phone Number</MenuItem>
+            <MenuItem value="Driver Licence Number">
+              Driver Licence Number
+            </MenuItem>
+            <MenuItem value="Passport Number">Passport Number</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          type={
+            document === "Email"
+              ? "email"
+              : document === "Phone Number"
+              ? "tel"
+              : "text"
+          }
+          margin="normal"
+          fullWidth
+          required
+          onChange={(event) => {
+            setDocument({ ...document, value: event.target.value });
+          }}
+          id="value"
+          label="Value"
+          name="value"
+          autoComplete="value"
+          autoFocus
+        />
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => handleAddDocument()}>
+          Add Document
         </Button>
       </Box>
     </Box>

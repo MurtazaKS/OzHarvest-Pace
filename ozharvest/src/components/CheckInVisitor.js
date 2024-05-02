@@ -71,16 +71,23 @@ const CheckInVisitor = () => {
             <ListItem>
               {result.firstname} {result.lastname}
             </ListItem>
+            <Typography>
+              Birthday:{""}{" "}
+              {new Date(result.birthday).toLocaleDateString("en-GB")}
+            </Typography>
             {result.checkin && result.checkin.length > 0 && (
-              <>
+              <Box
+                sx={{
+                  display: "flex",
+                }}>
                 <Typography>
                   Date: {result.checkin[result.checkin.length - 1].date}
                 </Typography>
                 <Typography>
-                  Day:{" "}
+                  Date:{" "}
                   {new Date(
                     result.checkin[result.checkin.length - 1].date
-                  ).toLocaleDateString("en-US", { weekday: "long" })}
+                  ).toLocaleDateString("en-GB")}
                 </Typography>
                 <Typography>
                   Time: {result.checkin[result.checkin.length - 1].time}
@@ -88,7 +95,7 @@ const CheckInVisitor = () => {
                 <Typography>
                   Location: {result.checkin[result.checkin.length - 1].location}
                 </Typography>
-              </>
+              </Box>
             )}
             <Select
               value={location}

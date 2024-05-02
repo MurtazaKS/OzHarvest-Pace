@@ -10,7 +10,7 @@ export const DataProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   const [, setUser] = useState(user);
-  const baseURL = "/api/customer";
+  const baseURL = "http://localhost:3001/api/customer";
 
   const newVisitor = async (visitor) => {
     try {
@@ -25,6 +25,28 @@ export const DataProvider = ({ children }) => {
       return response.data;
     } catch (error) {
       toast.error("Failed to Add Customer");
+    }
+  };
+
+  const addIdent = async (document, value) => {
+    try {
+      const response = await axios.post(
+        `/api/customer/${value}/ident`,
+        {
+          document,
+          value,
+        },
+        {
+          headers: {
+            Authorization: `Bearer ${token}`, // replace with your auth token
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
     }
   };
 
@@ -66,6 +88,7 @@ export const DataProvider = ({ children }) => {
     newVisitor,
     searchCustomer,
     checkInCustomer,
+    addIdent,
   };
   return (
     <>
