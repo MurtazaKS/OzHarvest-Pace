@@ -13,6 +13,7 @@ import { DataContext } from "../context/dataContext";
 
 const AddNewVisitor = () => {
   const { newVisitor, addIdent } = useContext(DataContext);
+  const [visitorID, setVisitorID] = useState("");
   const [document, setDocument] = useState({
     document: "",
     value: "",
@@ -26,22 +27,21 @@ const AddNewVisitor = () => {
       middlename: event.target.middlename.value,
       lastname: event.target.lastname.value,
       birthday: event.target.birthday.value,
-      // document: event.target.document.value,
-      // value: event.target.value.value,
       language: event.target.language.value,
     };
     try {
-      await newVisitor(visitor);
-      //await addIdent(visitor.document, visitor.value);
+      await newVisitor(visitor).then((response) => {
+        console.log(response);
+        setVisitorID(response.id);
+      });
     } catch (error) {
       console.error(error);
     }
   };
 
   const handleAddDocument = async (event) => {
-    event.preventDefault();
     try {
-      await addIdent(document.document, document.value);
+      await addIdent(visitorID, document.document, document.value);
     } catch (error) {
       console.error(error);
     }

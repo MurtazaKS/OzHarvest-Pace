@@ -22,16 +22,17 @@ export const DataProvider = ({ children }) => {
       if (response.data) {
         toast.success("Customer Added Successfully");
       }
+      console.log(response.data);
       return response.data;
     } catch (error) {
       toast.error("Failed to Add Customer");
     }
   };
 
-  const addIdent = async (document, value) => {
+  const addIdent = async (visitorID, document, value) => {
     try {
       const response = await axios.post(
-        `/api/customer/${value}/ident`,
+        `/api/customer/${visitorID}/ident`,
         {
           document,
           value,
