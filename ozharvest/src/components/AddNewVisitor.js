@@ -12,7 +12,7 @@ import {
 import { DataContext } from "../context/dataContext";
 
 const AddNewVisitor = () => {
-  const { newVisitor, addIdent } = useContext(DataContext);
+  const { newCustomer, addIdent } = useContext(DataContext);
   const [visitorID, setVisitorID] = useState("");
   const [document, setDocument] = useState({
     document: "",
@@ -30,7 +30,7 @@ const AddNewVisitor = () => {
       language: event.target.language.value,
     };
     try {
-      await newVisitor(visitor).then((response) => {
+      await newCustomer(visitor).then((response) => {
         console.log(response);
         setVisitorID(response.id);
       });

@@ -12,7 +12,22 @@ export const DataProvider = ({ children }) => {
   const [, setUser] = useState(user);
   const baseURL = "http://localhost:3001/api/customer";
 
-  const newVisitor = async (visitor) => {
+  const getCustomers = async () => {
+    try {
+      const response = await axios.get(baseURL, {
+        headers: {
+          Authorization: `Bearer ${token}`, // replace with your auth token
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
+  const newCustomer = async (visitor) => {
     try {
       const response = await axios.post(`${baseURL}/register`, visitor, {
         headers: {
@@ -32,7 +47,7 @@ export const DataProvider = ({ children }) => {
   const addIdent = async (visitorID, document, value) => {
     try {
       const response = await axios.post(
-        `/api/customer/${visitorID}/ident`,
+        `${baseURL}/${visitorID}/ident`,
         {
           document,
           value,
@@ -86,7 +101,8 @@ export const DataProvider = ({ children }) => {
   };
 
   const dataValue = {
-    newVisitor,
+    newCustomer,
+    getCustomers,
     searchCustomer,
     checkInCustomer,
     addIdent,
