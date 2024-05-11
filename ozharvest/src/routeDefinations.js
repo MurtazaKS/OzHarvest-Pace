@@ -5,6 +5,7 @@ import Register from "./components/Register";
 import Home from "./components/Home";
 import AddNewVisitor from "./components/AddNewVisitor";
 import CheckInVisitor from "./components/CheckInVisitor";
+import ViewVisitor from "./components/ViewVisitor";
 
 const routeDefinitions = createRoutesFromElements(
   <>
@@ -14,6 +15,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/home" element={<Home />} />
       <Route path="/newvisitor" element={<AddNewVisitor />} />
       <Route path="/checkin" element={<CheckInVisitor />} />
+      <Route path="/customer/:customerid" element={<ViewVisitor />} />
     </Route>
   </>
 );

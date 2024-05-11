@@ -28,8 +28,8 @@ const Login = () => {
     };
 
     try {
-      await loginUser(user);
-      navigate("/home");
+      const loggedInUser = await loginUser(user);
+      if (loggedInUser) navigate("/home");
     } catch (error) {
       if (error.response && error.response.status === 401) {
         setError("Incorrect username or password");
@@ -92,7 +92,11 @@ const Login = () => {
           InputProps={{
             endAdornment: (
               <IconButton onClick={handleClickShowPassword}>
-                {showPassword ? <Button>Hide</Button> : <Button>Show</Button>}
+                {showPassword ? (
+                  <Typography>Hide</Typography>
+                ) : (
+                  <Typography>Show</Typography>
+                )}
               </IconButton>
             ),
           }}

@@ -14,9 +14,24 @@ export const DataProvider = ({ children }) => {
 
   const getCustomers = async () => {
     try {
-      const response = await axios.get(baseURL, {
+      const response = await axios.get(`${baseURL}`, {
         headers: {
           Authorization: `Bearer ${token}`, // replace with your auth token
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
+  const getCustomerByID = async (customerId) => {
+    try {
+      const response = await axios.get(`${baseURL}/${customerId}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
         },
       });
 
@@ -54,7 +69,7 @@ export const DataProvider = ({ children }) => {
         },
         {
           headers: {
-            Authorization: `Bearer ${token}`, // replace with your auth token
+            Authorization: `Bearer ${token}`,
           },
         }
       );
@@ -106,6 +121,7 @@ export const DataProvider = ({ children }) => {
     searchCustomer,
     checkInCustomer,
     addIdent,
+    getCustomerByID,
   };
   return (
     <>

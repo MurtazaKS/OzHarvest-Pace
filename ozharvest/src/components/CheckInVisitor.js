@@ -14,6 +14,7 @@ import {
   TableHead,
   TableRow,
 } from "@mui/material";
+import { Link } from "react-router-dom";
 
 const CheckInVisitor = () => {
   const { searchCustomer, checkInCustomer, getCustomers } =
@@ -87,10 +88,12 @@ const CheckInVisitor = () => {
             </TableRow>
           </TableHead>
           <TableBody>
-            {searchResults.map((result, index) => (
+            {searchResults?.map((result, index) => (
               <TableRow key={index}>
                 <TableCell>
-                  {result.firstname} {result.lastname}
+                  <Link to={`/customer/${result.id}`}>
+                    {result.firstname} {result.lastname}
+                  </Link>
                 </TableCell>
                 <TableCell>
                   {new Date(result.birthday).toLocaleDateString("en-GB")}
