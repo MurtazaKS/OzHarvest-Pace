@@ -306,7 +306,7 @@ curl -s \
 -H 'Accept: application/json' \
 -H "Content-Type: application/json" \
 -H "Authorization: Bearer ${TOKEN}" \
---data '{"ident": {"type": "email", "value": "peter@example.com"}}' \
+--data '{"ident": {"document": "email", "value": "peter@example.com"}}' \
 -X POST http://localhost:3001/api/customer
 ```
 

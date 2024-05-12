@@ -1245,7 +1245,7 @@ router.post('/api/:var(customer|customers)',
     const {
         firstname = null,
         lastname = null,
-        ident = {"type": null, "value": null}
+        ident = {"document": null, "value": null}
     } = req.body;
     
     Customer.find({
@@ -1258,8 +1258,8 @@ router.post('/api/:var(customer|customers)',
         },
         {
           $and: [
-            {"ident.document": ident.type},
-            {"ident.id": ident.value}
+            {"ident.document": ident.document},
+            {"ident.value": ident.value}
           ]
         },
       ]
