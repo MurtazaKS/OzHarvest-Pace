@@ -9,10 +9,10 @@ const ViewVisitor = () => {
   const { customerid } = params;
   const [customer, setCustomer] = useState(null);
 
-  console.log(customer.ident);
   useEffect(() => {
     const fetchCustomer = async () => {
       const data = await getCustomerByID(customerid);
+     
       setCustomer(data);
     };
 

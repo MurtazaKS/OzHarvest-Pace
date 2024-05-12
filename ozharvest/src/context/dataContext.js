@@ -81,6 +81,23 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const addCustomerAddress = async (visitorID, address) => {
+    try {
+      const response = await axios.post(`${baseURL}/${visitorID}/address`, address,
+        {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
   const searchCustomer = async (customer) => {
     try {
       const response = await axios.post(`${baseURL}`, customer, {
@@ -122,6 +139,7 @@ export const DataProvider = ({ children }) => {
     checkInCustomer,
     addIdent,
     getCustomerByID,
+    addCustomerAddress,
   };
   return (
     <>

@@ -18,3 +18,6 @@ Username Field: Staff members are required to enter a unique username. This fiel
 Email Field: Staff members are required to enter a valid email address.
 Password Field: Staff members are required to enter a password. The password field has a show/hide feature that allows users to toggle the visibility of their password.
 Register Button: After filling out the form, users can click the "Sign In" button to create their account. If the account is successfully created, they will be redirected to the login page.
+
+
+
