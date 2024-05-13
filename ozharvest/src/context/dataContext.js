@@ -114,6 +114,28 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const searchCustomerByIdent = async (document, value) => {
+    const identData = {
+      ident: {
+        document,
+        value,
+      },
+    };
+  
+    try {
+      const response = await axios.post(`${baseURL}`, identData, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      return response.data;
+    } catch (error) {
+      console.error('Error:', error);
+      return null;
+    }
+  };
+
   const checkInCustomer = async (customerId, location) => {
     try {
       const response = await axios.post(
@@ -140,6 +162,7 @@ export const DataProvider = ({ children }) => {
     addIdent,
     getCustomerByID,
     addCustomerAddress,
+    searchCustomerByIdent
   };
   return (
     <>

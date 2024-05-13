@@ -6,23 +6,54 @@ import {
   Button,
   MenuItem,
   Select,
-  Typography,
+  Tabs,
+  Tab,
   Table,
   TableBody,
   TableCell,
   TableContainer,
   TableHead,
   TableRow,
+  FormControl,
+  InputLabel,
 } from "@mui/material";
 import { Link } from "react-router-dom";
 
+function TabPanel(props) {
+  const { children, value, index, ...other } = props;
+
+  return (
+    <Box
+      role="tabpanel"
+      hidden={value !== index}
+      id={`simple-tabpanel-${index}`}
+      aria-labelledby={`simple-tab-${index}`}
+      {...other}>
+      {value === index && <Box sx={{ p: 3 }}>{children}</Box>}
+    </Box>
+  );
+}
+
 const CheckInVisitor = () => {
-  const { searchCustomer, checkInCustomer, getCustomers } =
-    useContext(DataContext);
+  const {
+    searchCustomer,
+    checkInCustomer,
+    getCustomers,
+    searchCustomerByIdent,
+  } = useContext(DataContext);
   const [searchResults, setSearchResults] = useState([]);
   const [location, setLocation] = useState("");
+  const [value, setValue] = useState(0);
+  const [ident, setIdent] = useState({
+    document: "",
+    id: "",
+  });
 
-  const handleSubmit = async (event) => {
+  const handleChange = (event, newValue) => {
+    setValue(newValue);
+  };
+
+  const handleSearchByName = async (event) => {
     event.preventDefault();
     const customer = {
       firstname: event.target.firstname.value,
@@ -30,6 +61,17 @@ const CheckInVisitor = () => {
     };
     try {
       const response = await searchCustomer(customer);
+      setSearchResults(response);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleSearchById = async (event) => {
+    event.preventDefault();
+
+    try {
+      const response = await searchCustomerByIdent(ident.document, ident.id);
       setSearchResults(response);
     } catch (error) {
       console.error(error);
@@ -50,30 +92,81 @@ const CheckInVisitor = () => {
     fetchCustomers();
   }, [getCustomers]);
   return (
-    <Box component="form" onSubmit={handleSubmit}>
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="firstname"
-        label="First Name"
-        name="firstname"
-        autoComplete="firstname"
-        autoFocus
-      />
-      <TextField
-        margin="normal"
-        required
-        fullWidth
-        id="lastname"
-        label="Last Name"
-        name="lastname"
-        autoComplete="lastname"
-        autoFocus
-      />
-      <Button variant="contained" type="submit">
-        Search
-      </Button>
+    <Box component="form">
+      <Tabs value={value} onChange={handleChange}>
+        <Tab label="Search by Name" />
+        <Tab label="Search by ID" />
+      </Tabs>
+      <TabPanel value={value} index={0}>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="firstname"
+          label="First Name"
+          name="firstname"
+          autoComplete="firstname"
+          autoFocus
+        />
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="lastname"
+          label="Last Name"
+          name="lastname"
+          autoComplete="lastname"
+          autoFocus
+        />
+        <Button
+          onClick={(e) => handleSearchByName(e)}
+          variant="contained"
+          type="submit">
+          Search
+        </Button>
+      </TabPanel>
+
+      <TabPanel value={value} index={1}>
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="document-label">Document</InputLabel>
+          <Select
+            labelId="document-label"
+            required
+            name="document"
+            id="document"
+            value={ident.document}
+            onChange={(event) => {
+              setIdent({ ...ident, document: event.target.value });
+            }}
+            label="Document">
+            <MenuItem value="Email">Email</MenuItem>
+            <MenuItem value="Phone Number">Phone Number</MenuItem>
+            <MenuItem value="Driver Licence Number">
+              Driver Licence Number
+            </MenuItem>
+            <MenuItem value="Passport Number">Passport Number</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          margin="normal"
+          required
+          fullWidth
+          id="id"
+          label="Id"
+          name="id"
+          value={ident.id}
+          onChange={(event) => {
+            setIdent({ ...ident, id: event.target.value });
+          }}
+          autoFocus
+        />
+        <Button
+          onClick={(e) => handleSearchById(e)}
+          variant="contained"
+          type="submit">
+          Search
+        </Button>
+      </TabPanel>
 
       <TableContainer>
         <Table>
