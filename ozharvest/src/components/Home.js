@@ -9,9 +9,6 @@ const Home = () => {
   checkAuthStatus();
   const handleLogout = () => {
     logoutUser();
-    navigate("/login");
-    const token = localStorage.getItem("token");
-    console.log(token);
   };
   return (
     <Box
