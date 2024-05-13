@@ -40,22 +40,21 @@ const AddNewVisitor = () => {
       const response = await newCustomer(visitor);
       console.log(response);
       setVisitorID(response.id);
-  
-      // After the visitor is created, add the document
-      try {
-        await addIdent(visitorID, document.document, document.value);
-      } catch (error) {
-        console.error("Error adding document:", error);
-      }
-
-      // After the visitor is created, add the address
-      try {
-        await addCustomerAddress(visitorID, address);
-      } catch (error) {
-        console.error("Error adding address:", error);
-      }
     } catch (error) {
       console.error("Error creating visitor:", error);
+    }
+    // After the visitor is created, add the document
+    try {
+      await addIdent(visitorID, document.document, document.value);
+    } catch (error) {
+      console.error("Error adding document:", error);
+    }
+
+    // After the visitor is created, add the address
+    try {
+      await addCustomerAddress(visitorID, address);
+    } catch (error) {
+      console.error("Error adding address:", error);
     }
   };
 
