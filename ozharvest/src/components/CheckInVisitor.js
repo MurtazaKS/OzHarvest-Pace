@@ -44,6 +44,10 @@ const CheckInVisitor = () => {
   const [searchResults, setSearchResults] = useState([]);
   const [location, setLocation] = useState("");
   const [value, setValue] = useState(0);
+  const [name, setName] = useState({
+    firstname: "",
+    lastname: "",
+  });
   const [ident, setIdent] = useState({
     document: "",
     id: "",
@@ -56,9 +60,10 @@ const CheckInVisitor = () => {
   const handleSearchByName = async (event) => {
     event.preventDefault();
     const customer = {
-      firstname: event.target.firstname.value,
-      lastname: event.target.lastname.value,
+      firstname: name.firstname,
+      lastname: name.lastname,
     };
+
     try {
       const response = await searchCustomer(customer);
       setSearchResults(response);
@@ -107,6 +112,8 @@ const CheckInVisitor = () => {
           name="firstname"
           autoComplete="firstname"
           autoFocus
+          value={name.firstname}
+          onChange={(e) => setName({ ...name, firstname: e.target.value })}
         />
         <TextField
           margin="normal"
@@ -117,6 +124,8 @@ const CheckInVisitor = () => {
           name="lastname"
           autoComplete="lastname"
           autoFocus
+          value={name.lastname}
+          onChange={(e) => setName({ ...name, lastname: e.target.value })}
         />
         <Button
           onClick={(e) => handleSearchByName(e)}

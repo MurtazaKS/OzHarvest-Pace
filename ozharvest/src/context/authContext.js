@@ -6,9 +6,7 @@ import "react-toastify/dist/ReactToastify.css";
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-  const [user, setUser] = useState(
-    JSON.parse(localStorage.getItem("user")) || null
-  );
+  const [user, setUser] = useState(false);
   const baseURL = "http://localhost:3001/api/auth";
 
   const createUser = async (user) => {
@@ -46,12 +44,10 @@ export const AuthProvider = ({ children }) => {
         },
       });
       if (response.data.username !== "guest") {
-        setUser(response.data.id);
-        localStorage.setItem("user", JSON.stringify(response.data.id));
+        setUser(true);
         return response.data.id;
       } else {
-        setUser(null);
-        localStorage.removeItem("user");
+        setUser(false);
         localStorage.removeItem("token");
       }
     } catch (error) {
@@ -64,7 +60,6 @@ export const AuthProvider = ({ children }) => {
       const response = await axios.get(`${baseURL}/logout`);
       if (response.status === 204) {
         localStorage.removeItem("token");
-        localStorage.removeItem("user");
         setUser(null);
       }
     } catch (error) {

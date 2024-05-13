@@ -38,23 +38,11 @@ const AddNewVisitor = () => {
     };
     try {
       const response = await newCustomer(visitor);
-      console.log(response);
       setVisitorID(response.id);
+      await addIdent(response.id, document.document, document.value);
+      await addCustomerAddress(response.id, address);
     } catch (error) {
       console.error("Error creating visitor:", error);
-    }
-    // After the visitor is created, add the document
-    try {
-      await addIdent(visitorID, document.document, document.value);
-    } catch (error) {
-      console.error("Error adding document:", error);
-    }
-
-    // After the visitor is created, add the address
-    try {
-      await addCustomerAddress(visitorID, address);
-    } catch (error) {
-      console.error("Error adding address:", error);
     }
   };
 
@@ -161,70 +149,81 @@ const AddNewVisitor = () => {
           autoFocus
         />
         <TextField
-        margin="normal"
-        fullWidth
-        id="type"
-        label="Address Type"
-        name="type"
-        autoComplete="type"
-        autoFocus
-        onChange={(event) => {
-          setAddress({ ...address, type: event.target.value });
-        }}
-      />
-      <TextField
-        margin="normal"
-        fullWidth
-        id="address"
-        label="Address"
-        name="address"
-        autoComplete="address"
-        autoFocus
-        onChange={(event) => {
-          setAddress({ ...address, address: event.target.value });
-        }}
-      />
-      <TextField
-        margin="normal"
-        fullWidth
-        id="suburb"
-        label="Suburb"
-        name="suburb"
-        autoComplete="suburb"
-        autoFocus
-        onChange={(event) => {
-          setAddress({ ...address, suburb: event.target.value });
-        }}
-      />
-      <TextField
-        margin="normal"
-        fullWidth
-        id="state"
-        label="State"
-        name="state"
-        autoComplete="state"
-        autoFocus
-        onChange={(event) => {
-          setAddress({ ...address, state: event.target.value });
-        }}
-      />
-      <TextField
-        margin="normal"
-        fullWidth
-        id="postcode"
-        label="Postcode"
-        name="postcode"
-        autoComplete="postcode"
-        autoFocus
-        onChange={(event) => {
-          setAddress({ ...address, postcode: event.target.value });
-        }}
-      />
+          margin="normal"
+          fullWidth
+          id="type"
+          label="Address Type"
+          name="type"
+          autoComplete="type"
+          autoFocus
+          onChange={(event) => {
+            setAddress({ ...address, type: event.target.value });
+          }}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          id="address"
+          label="Address"
+          name="address"
+          autoComplete="address"
+          autoFocus
+          onChange={(event) => {
+            setAddress({ ...address, address: event.target.value });
+          }}
+        />
+        <TextField
+          margin="normal"
+          fullWidth
+          id="suburb"
+          label="Suburb"
+          name="suburb"
+          autoComplete="suburb"
+          autoFocus
+          onChange={(event) => {
+            setAddress({ ...address, suburb: event.target.value });
+          }}
+        />
+        <FormControl fullWidth margin="normal">
+          <InputLabel id="state-label">State</InputLabel>
+          <Select
+            labelId="state-label"
+            id="state"
+            name="state"
+            value={address.state}
+            onChange={(event) => {
+              setAddress({ ...address, state: event.target.value });
+            }}
+            label="State"
+            autoFocus>
+            <MenuItem value={"New South Wales"}>New South Wales</MenuItem>
+            <MenuItem value={"Victoria"}>Victoria</MenuItem>
+            <MenuItem value={"Queensland"}>Queensland</MenuItem>
+            <MenuItem value={"Western Australia"}>Western Australia</MenuItem>
+            <MenuItem value={"South Australia"}>South Australia</MenuItem>
+            <MenuItem value={"Tasmania"}>Tasmania</MenuItem>
+            <MenuItem value={"Australian Capital Territory"}>
+              Australian Capital Territory
+            </MenuItem>
+            <MenuItem value={"Northern Territory"}>Northern Territory</MenuItem>
+          </Select>
+        </FormControl>
+        <TextField
+          margin="normal"
+          fullWidth
+          id="postcode"
+          label="Postcode"
+          name="postcode"
+          autoComplete="postcode"
+          autoFocus
+          onChange={(event) => {
+            setAddress({ ...address, postcode: event.target.value });
+          }}
+        />
         <Button type="submit" variant="contained" color="primary">
           Add Visitor
         </Button>
       </Box>
-     
     </Box>
   );
 };
