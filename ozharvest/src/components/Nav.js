@@ -8,7 +8,6 @@ const Nav = () => {
   const navigate = useNavigate();
   const handleLogout = () => {
     logoutUser();
-    navigate("/login");
   };
 
   return (
