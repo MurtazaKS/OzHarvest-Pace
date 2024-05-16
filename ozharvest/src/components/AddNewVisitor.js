@@ -61,6 +61,7 @@ const AddNewVisitor = () => {
           padding: "20px",
           borderRadius: "10px",
         }}>
+        <Typography variant="h4">Add New Visitor</Typography>
         <TextField
           margin="normal"
           required

@@ -107,7 +107,7 @@ const Login = () => {
           variant="contained"
           sx={{ mt: 3, mb: 2 }}
           color="primary">
-          Sign In
+          Log In
         </Button>
       </Box>
     </Box>

@@ -59,6 +59,21 @@ export const DataProvider = ({ children }) => {
     }
   };
 
+  const updateCustomer = async (id, customerData) => {
+    try {
+      const response = await axios.put(`${baseURL}/${id}`, customerData, {
+        headers: {
+          Authorization: `Bearer ${token}`, // replace with your auth token
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
+
   const addIdent = async (visitorID, document, value) => {
     try {
       const response = await axios.post(
@@ -83,7 +98,9 @@ export const DataProvider = ({ children }) => {
 
   const addCustomerAddress = async (visitorID, address) => {
     try {
-      const response = await axios.post(`${baseURL}/${visitorID}/address`, address,
+      const response = await axios.post(
+        `${baseURL}/${visitorID}/address`,
+        address,
         {
           headers: {
             Authorization: `Bearer ${token}`,
@@ -121,17 +138,17 @@ export const DataProvider = ({ children }) => {
         value,
       },
     };
-  
+
     try {
       const response = await axios.post(`${baseURL}`, identData, {
         headers: {
-          'Authorization': `Bearer ${token}`,
+          Authorization: `Bearer ${token}`,
         },
       });
-  
+
       return response.data;
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       return null;
     }
   };
@@ -162,7 +179,8 @@ export const DataProvider = ({ children }) => {
     addIdent,
     getCustomerByID,
     addCustomerAddress,
-    searchCustomerByIdent
+    searchCustomerByIdent,
+    updateCustomer,
   };
   return (
     <>
