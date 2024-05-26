@@ -86,8 +86,8 @@ Description       Show Customer
 
 */
 router.get('/api/:var(customer|customers)', (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"
@@ -124,7 +124,6 @@ router.get('/api/:var(customer|customers)', (req, res) => {
     })
   })
 })
-
 
 
 /*
@@ -229,8 +228,8 @@ Description       Delete Customer
 
 */
 router.delete('/api/:var(customer|customers)/:id', (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"
@@ -250,15 +249,6 @@ router.delete('/api/:var(customer|customers)/:id', (req, res) => {
     })
   })
 })
-
-
-
-
-
-
-
-
-
 
 /*
 
@@ -475,8 +465,8 @@ Description       Remove Customer Identity Document
 
 */
 router.delete('/api/:var(customer|customers)/:customerid/:var(ident|idents)/:identid',  async (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"
@@ -724,8 +714,8 @@ Description       Remove Customer Comment
 
 */
 router.delete('/api/:var(customer|customers)/:customerid/:var(comment|comments)/:commentid',  async (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"
@@ -980,8 +970,8 @@ Description       Remove Customer Address
 
 */
 router.delete('/api/:var(customer|customers)/:customerid/:var(address|addresses)/:addressid',  async (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"
@@ -1176,8 +1166,8 @@ Description       Remove Customer Check-in Event
 
 */
 router.delete('/api/:var(customer|customers)/:customerid/:var(checkin|checkins)/:checkinid',  async (req, res) => {
-  /* Check for Authenticated User */
-  if (!req.user) return res.status(403).json({
+  /* Check for Authenticated Admin */
+  if (!req.user || req.user['role'] !== 'admin' ) return res.status(403).json({
     errors: [{
       status: "AUTH_ERROR",
       msg: "Access Denied"

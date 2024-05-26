@@ -21,11 +21,10 @@ Description       Store a new user
 router.post(["/api/auth/signup", "/api/signup"],
   [
     check("username", "Please Enter a Valid Username").not().isEmpty(),
-    check("username", "Username must be between 4 and 32 characters").isLength({
-      min: 4,
+    check("username", "Username must be between 2 and 32 characters").isLength({
+      min: 2,
       max: 32
     }),
-    check("email", "Please enter a valid email").isEmail(),
     check("password", "Please enter a valid password").isLength({
       min: 6
     })
@@ -41,86 +40,89 @@ router.post(["/api/auth/signup", "/api/signup"],
     /* Build Input */
     const {
         username,
-        email,
         password
     } = req.body;
     
-    /* Check Unique Email Address */
+    /* Check Unique Username */
     await User.findOne({
-      email
+      username
     })
     .then(async user => {
       if (user) {
         return res.status(400).json({
           errors: [{
             status: "AUTH_ERROR",
-            msg: "Email Address Already Exists",
-            param: "email",
+            msg: "Username Already Exists",
+            param: "username",
             location: "body"
           }]
         })
       } else {
-        /* Check Unique Username */
-        await User.findOne({
-          username
-        })
-        .then(async user => {
-          if (user) {
-            return res.status(400).json({
-              errors: [{
-                status: "AUTH_ERROR",
-                msg: "Username Already Exists",
-                param: "username",
-                location: "body"
-              }]
-            })
+        /* Check Restricted Usernames */
+        const restrictedUsernames = ["admin", "user", "root", "guest"];
+        if (restrictedUsernames.includes(username.toLowerCase())) {
+          return res.status(400).json({
+            errors: [{
+              status: "AUTH_ERROR",
+              msg: "Restricted Username",
+              param: "username",
+              location: "body"
+            }]
+          })
+        }
+        
+        
+        await User.countDocuments({})
+        .then(userCount => {
+          if (userCount == 0) {
+            role = "admin"
           } else {
-            /* Check Restricted Usernames */
-            const restrictedUsernames = ["admin", "user", "root", "guest"];
-            if (restrictedUsernames.includes(username.toLowerCase())) {
-              return res.status(400).json({
-                errors: [{
-                  status: "AUTH_ERROR",
-                  msg: "Restricted Username",
-                  param: "username",
-                  location: "body"
-                }]
-              })
-            }
-            
-            user = new User({
-              username,
-              email,
-              password
-            });
-
-            const salt = await bcrypt.genSalt(10);
-            user.password = await bcrypt.hash(password, salt);
-
-            await user.save();
-
-            const payload = {
-              user: { id: user.id }
-            }
-
-            jwt.sign(
-              payload,
-              SECRET, { expiresIn: 10000 },
-              (err, token) => {
-                if (err) throw err;
-                res.cookie('token', token, { httpOnly: true });
-                return res.status(200).json({
-                  token
-                });
-              }
-            )
+            role = "user"
           }
         })
-        .catch(() => {
+        .catch((err) => {
+          console.log(err)
           return res.status(500).json({
             errors: [{
               status: "SERVER_ERROR",
-              msg: "Error Getting User"
+              msg: "Error Getting User Count"
+            }]
+          })
+        })
+        
+        user = new User({
+          username: username,
+          password: password,
+          role: role
+        });
+        
+        const salt = await bcrypt.genSalt(10);
+        user.password = await bcrypt.hash(password, salt);
+        
+        await user.save()
+        .then(save => {
+          const payload = {
+            user: { id: user.id, role: user.role }
+          }
+          
+          jwt.sign(
+            payload,
+            SECRET, { expiresIn: 10000 },
+            (err, token) => {
+              if (err) throw err;
+              res.cookie('token', token, { httpOnly: true });
+              return res.status(200).json({
+                token
+              });
+            }
+          )
+        })
+        .catch((err) => {
+          console.log(err)
+          return res.status(500).json({
+            errors: [{
+              status: "SERVER_ERROR",
+              msg: "Error Saving User"
             }]
           })
         })
@@ -183,7 +185,7 @@ router.post(["/api/auth/login", "/api/login"],
         }
         
         const payload = {
-          user: {id: user.id}
+          user: {id: user.id, role: user.role}
         }
 
         jwt.sign(

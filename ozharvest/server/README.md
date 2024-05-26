@@ -327,7 +327,7 @@ __Examples:__
 curl -s \
 -H 'Accept: application/json' \
 -H 'Content-Type: application/json' \
---data '{"username":"john", "email":"john@example.com",  "password":"password"}' \
+--data '{"username":"john", "password":"password"}' \
 -X POST http://localhost:3001/api/signup
 ```
 
@@ -352,11 +352,38 @@ http://localhost:3001/api/auth/whoami | jq -r
 
 #### User
 
-| Verb   | URI                | Action  | Description               |
-| ------ |------------------- | ------- | ------------------------- |
-| GET    | /user              | index   | Get list of users         |
-| GET    | /user/{id}         | show    | Show a single user        |
+| Verb   | URI                | Action  | Auth        | Description               |
+| ------ |------------------- | ------- | ----------- | ------------------------- |
+| GET    | /user              | index   | Req         | Get list of users         |
+| GET    | /user/{id}         | show    | Req         | Show a single user        |
+| PUT    | /user/{id}         | update  | Req         | Update a user             |
+| DELETE | /user/{id}         | destroy | Req (admin) | Delete User               |
 
+*Note:* User update requests can be completed by self or an admin user. Updatable fields are:
+- email
+- password
+- name
+- role (Admin users only)
+
+__Examples:__
+
+###### Show all users
+```
+curl -s \
+-H 'Accept: application/json' \
+-H "Authorization: Bearer ${TOKEN}" \
+http://localhost:3001/api/user | jq -r
+```
+
+###### Update user role by ID
+```
+curl -s \
+-H 'Accept: application/json' \
+-H 'Content-Type: application/json' \
+-H "Authorization: Bearer ${TOKEN}" \
+--data '{"role":"user"}' \
+-X PUT http://localhost:3001/api/user/665205e99f05e156b5f8b517 | jq -r
+```
 
 ### Models
 
@@ -445,13 +472,15 @@ __Example:__
 
 #### User
 
-| Name     | Type          | Required | Hidden | Description               |
-| -------- |-------------- | -------- | ------ | ------------------------- |
-| username | String        | True     | False  | Username                  |
-| email    | String        | True     | True   | Email Address             |
-| password | String        | True     | True   | Password Hash             |
-| name     | String        | False    | False  | Full Name                 |
-| created  | Date          | True     | False  | Create timestamp          |
+| Name       | Type          | Required | Hidden | Description               |
+| ---------- |-------------- | -------- | ------ | ------------------------- |
+| username   | String        | True     | False  | Username                  |
+| email      | String        | False    | False  | Email Address             |
+| password   | String        | True     | True   | Password Hash             |
+| name       | String        | False    | False  | Full Name                 |
+| role       | String        | True     | False  | User Role                 |
+| createdAt  | Timestamp     | True     | False  | Create At Timestamp       |
+| updatedAt  | Timestamp     | True     | False  | Updated At Timestamp      |
 
 __Example:__
 

@@ -15,16 +15,14 @@ doConnect()
 const userSchema = new mongoose.Schema({
   username: {
     type: String,
+    lowercase: true,
     required: true,
     unique:true,
     index: true
   },
   email: {
     type: String,
-    required: true,
-    unique:true,
-    index: true,
-    select: false 
+    required: false
   },
   password: {
     type: String,
@@ -37,7 +35,9 @@ const userSchema = new mongoose.Schema({
   },
   role:  {
     type: String,
-    required: false
+    lowercase: true,
+    default: 'user',
+    enum: ['user', 'admin']
   }
 }, { timestamps: true })
 

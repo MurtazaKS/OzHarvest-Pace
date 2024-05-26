@@ -42,7 +42,9 @@ const customerSchema = new mongoose.Schema({
       {
         type: {
           type: String,
-          required: true
+          required: true,
+          lowercase: true,
+          default: 'home'
         },
         address: {
           type: String,
