@@ -6,6 +6,7 @@ import Home from "./components/Home";
 import AddNewVisitor from "./components/AddNewVisitor";
 import CheckInVisitor from "./components/CheckInVisitor";
 import ViewVisitor from "./components/ViewVisitor";
+import ManageUser from "./components/ManageUser";
 
 const routeDefinitions = createRoutesFromElements(
   <>
@@ -16,6 +17,7 @@ const routeDefinitions = createRoutesFromElements(
       <Route path="/newvisitor" element={<AddNewVisitor />} />
       <Route path="/checkin" element={<CheckInVisitor />} />
       <Route path="/customer/:customerid" element={<ViewVisitor />} />
+      <Route path="/manageusers" element={<ManageUser />} />
     </Route>
   </>
 );

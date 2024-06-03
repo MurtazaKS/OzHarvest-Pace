@@ -10,7 +10,23 @@ export const DataProvider = ({ children }) => {
   const { user } = useContext(AuthContext);
   const token = localStorage.getItem("token");
   const [, setUser] = useState(user);
+  const userURL = "http://localhost:3001/api/users";
   const baseURL = "http://localhost:3001/api/customer";
+
+  const getUsers = async () => {
+    try {
+      const response = await axios.get(`${userURL}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      return response.data;
+    } catch (error) {
+      console.error("Error:", error);
+      return null;
+    }
+  };
 
   const getCustomers = async () => {
     try {
@@ -172,6 +188,7 @@ export const DataProvider = ({ children }) => {
   };
 
   const dataValue = {
+    getUsers,
     newCustomer,
     getCustomers,
     searchCustomer,

@@ -56,6 +56,13 @@ const Nav = () => {
                   variant="contained"
                   color="primary"
                   sx={{ margin: "10px" }}
+                  onClick={() => navigate("/manageusers")}>
+                  Manage User
+                </Button>
+                <Button
+                  variant="contained"
+                  color="primary"
+                  sx={{ margin: "10px" }}
                   onClick={handleLogout}>
                   Log out
                 </Button>
